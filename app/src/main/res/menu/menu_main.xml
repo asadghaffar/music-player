@@ -1,10 +1,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.blinkedge.musciplayer.MainActivity">
+    tools:context="com.blinkedge.musciplayer.Activities.MainActivity">
+
+    <item
+        android:id="@+id/action_create_new_playlist"
+        android:orderInCategory="100"
+        android:title="@string/create_new_playlist"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_create_new_playlist_from_folder"
+        android:orderInCategory="100"
+        android:title="@string/create_new_playlist_from_folder"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sleep_timer"
+        android:orderInCategory="100"
+        android:title="@string/sleep_timer"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_rate"
+        android:orderInCategory="100"
+        android:title="@string/action_rate"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="@string/action_about_us"
+        app:showAsAction="never" />
+
 </menu>
