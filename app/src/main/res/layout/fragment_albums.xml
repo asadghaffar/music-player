@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragments.AlbumsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/musicItemImage"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_headset" />
+
+        <TextView
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:gravity="left|center"
+            android:text="Album Name"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
 
 </FrameLayout>

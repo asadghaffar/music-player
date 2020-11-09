@@ -5,10 +5,85 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ArtistFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/musicItemImage"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_headset" />
+
+        <LinearLayout
+            android:paddingLeft="15dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <TextView
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="bottom"
+                android:text="Artist Name"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:gravity="left|center"
+                    android:text="Album ,"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:gravity="left|center"
+                    android:text="Track"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

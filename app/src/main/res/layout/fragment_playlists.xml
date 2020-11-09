@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".Fragments.PlaylistsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="10">
 
-</FrameLayout>
+        <TextView
+            android:textColor="@color/white"
+            android:paddingTop="8dp"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:text="All Tracks"
+            android:gravity="left|center"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:text="12 Tracks"
+            android:gravity="left|center"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/white"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+</LinearLayout>
