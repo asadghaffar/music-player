@@ -12,14 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_weight="2"
-        android:src="@drawable/ic_headset"/>
+        android:src="@drawable/ic_headset" />
 
     <TextView
         android:id="@+id/musicItemName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
         android:layout_gravity="left|center"
+        android:layout_weight="6"
         android:text="Music Name"
         android:textColor="@color/white"
         android:textSize="15sp" />
@@ -28,10 +28,11 @@
         android:id="@+id/musicItemDuration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="2:30"
         android:layout_gravity="center"
-        android:textColor="#FFE606"
+        android:layout_weight="2"
+        android:paddingLeft="20dp"
+        android:text="2:30"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
 </LinearLayout>

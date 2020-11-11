@@ -2,8 +2,10 @@ package com.blinkedge.musciplayer.Activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,20 +29,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.blinkedge.musciplayer.MusicFiles.MusicFilesModal;
+import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.blinkedge.musciplayer.TabViewAdapter.TabViewAdapter;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     public static final int REQUEST_CODE = 1;
-    public static ArrayList<MusicFilesModal> temporaryAudioFilesModal;
+    public static List<MusicFilesModal> temporaryAudioFilesModal;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -73,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
         tabLayout();
         checkPermission();
 
+    }
+
+
+    public byte[] getAlbumImage(String uri) {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(uri, new HashMap<>());
+        byte[] albumImageData = mediaMetadataRetriever.getEmbeddedPicture();
+        mediaMetadataRetriever.release();
+        return albumImageData;
     }
 
     private void id() {
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-            temporaryAudioFilesModal = getAllAudio(this);
+            temporaryAudioFilesModal = getAllAudioFromDevice(this);
 
         }
     }
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //do what ever
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                getAllAudio(this);
+                getAllAudioFromDevice(this);
 
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
@@ -185,41 +189,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    public static ArrayList<MusicFilesModal> getAllAudio(Context context) {
+    public List<MusicFilesModal> getAllAudioFromDevice(final Context context) {
 
-        ArrayList<MusicFilesModal> musicFilesModalArrayList = new ArrayList<>();
+        final List<MusicFilesModal> tempAudioList = new ArrayList<>();
+
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.AudioColumns.ALBUM,
+                MediaStore.Audio.ArtistColumns.ARTIST,
+                MediaStore.Audio.Media.DURATION};
 
-        String[] projection = {
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.ALBUM,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.DATA // for path getter setter
 
-        };
+        Cursor c = context.getContentResolver().query(uri, projection, null, null, null);
 
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (c != null) {
+            while (c.moveToNext()) {
 
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                String title = cursor.getString(0);
-                String artist = cursor.getString(1);
-                String album = cursor.getString(2);
-                String duration = cursor.getString(3);
-                String path = cursor.getString(4);
+                String path = c.getString(0);
+                String album = c.getString(1);
+                String artist = c.getString(2);
+                String duration = c.getString(3);
 
-                MusicFilesModal musicFilesModal = new MusicFilesModal(path, title, artist, album, duration);
+                String title = path.substring(path.lastIndexOf("/") + 1);
 
-                Log.d("path: " + path, "album: " + album);
+                MusicFilesModal audioModel = new MusicFilesModal(path, title, artist, album, duration);
 
-                musicFilesModalArrayList.add(musicFilesModal);
+                //Log.e("Name :" + title, " Album :" + album);
+                //Log.e("Path :" + path, " Artist :" + artist);
+
+                Log.d("artistName_", artist);
+                Log.d("albumName_", album);
+
+                tempAudioList.add(audioModel);
             }
-            cursor.close();
+            c.close();
         }
-        return musicFilesModalArrayList;
+        Log.d("tempAudioListSize_", tempAudioList.size() + "_");
 
+        return tempAudioList;
     }
 
 }

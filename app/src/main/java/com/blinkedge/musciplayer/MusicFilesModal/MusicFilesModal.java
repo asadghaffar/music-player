@@ -1,4 +1,4 @@
-package com.blinkedge.musciplayer.MusicFiles;
+package com.blinkedge.musciplayer.MusicFilesModal;
 
 public class MusicFilesModal {
 
@@ -14,9 +14,6 @@ public class MusicFilesModal {
         this.artist = artist;
         this.album = album;
         this.duration = duration;
-    }
-
-    public MusicFilesModal() {
     }
 
     // Getter Setter
