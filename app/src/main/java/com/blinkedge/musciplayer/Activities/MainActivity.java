@@ -1,10 +1,14 @@
 package com.blinkedge.musciplayer.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
@@ -32,9 +36,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.blinkedge.musciplayer.TabViewAdapter.TabViewAdapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,12 +92,13 @@ public class MainActivity extends AppCompatActivity {
         backImageView = findViewById(R.id.backImageView);
         searchSong = findViewById(R.id.searchSong);
         searchIcon = findViewById(R.id.searchIcon);
-        filter = findViewById(R.id.filter);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPger);
     }
 
+
+    @SuppressLint("ResourceType")
     private void onClick() {
 
         menuImage.setOnClickListener(v -> {
@@ -105,24 +112,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         searchIcon.setOnClickListener(v -> {
-            appName.setVisibility(View.GONE);
-            searchLinear.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
 
-        });
 
-        backImageView.setOnClickListener(v -> {
-            searchLinear.setVisibility(View.GONE);
-            appName.setVisibility(View.VISIBLE);
-
-        });
-
-        filter.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            ViewGroup viewGroup = findViewById(android.R.id.content);
-            View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.custom_filter_selection, viewGroup, false);
-            builder.setView(dialogView);
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
         });
 
     }
@@ -133,12 +126,17 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.action_settings) {
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.action_rate) {
-                Toast.makeText(this, "Rated", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.action_about) {
-                Toast.makeText(this, "About us", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.sortTitle) {
+                Toast toast = Toast.makeText(MainActivity.this, R.string.toastMessage, Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(Color.parseColor("#FFFFFF"));
+                toast.show();
             }
+            else if (id == R.id.sortAscending)
+                Toast.makeText(this, "Sorted By Aesending Order", Toast.LENGTH_SHORT).show();
+            else if (id == R.id.sortDescending)
+                Toast.makeText(this, "Sorted By Desending Order", Toast.LENGTH_SHORT).show();
 
             return true;
         });
@@ -217,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 //Log.e("Path :" + path, " Artist :" + artist);
 
                 Log.d("artistName_", artist);
+                Log.d("path_", path);
                 Log.d("albumName_", album);
 
                 tempAudioList.add(audioModel);

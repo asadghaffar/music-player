@@ -1,50 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
-            android:layout_margin="20dp"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Sort By"
-                android:textStyle="bold"
                 android:textSize="25sp"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
-            <RadioGroup
-                android:layout_marginTop="10dp"
-                android:id="@+id/sorting_dialog_radio_order1"
+            <RadioButton
+                android:id="@+id/sorting_dialog_radio_tile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/sorting_dialog_radio_tile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Title" />
-
-                <RadioButton
-                    android:id="@+id/sorting_dialog_radio_trackCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Track Count" />
-            </RadioGroup>
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Title" />
 
             <ImageView
                 android:layout_width="match_parent"

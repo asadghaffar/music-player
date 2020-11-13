@@ -21,5 +21,6 @@
     <string name="create_new_playlist">Create new playlist</string>
     <string name="create_new_playlist_from_folder">Create new playlist from folder</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="toastMessage">Sort By Title</string>
 
 </resources>

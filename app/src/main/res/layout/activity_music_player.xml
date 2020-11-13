@@ -1,66 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_track_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".Activities.MusicPlayerActivity"
     tools:ignore="HardcodedText">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/activity_track_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/musicPlayerToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/menu_track"
-            app:navigationIcon="@drawable/ic_arrow_left_vector" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:src="@drawable/ic_headset" />
-
     <LinearLayout
+        android:id="@+id/activity_track_holder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
 
-        <com.example.jean.jcplayer.view.JcPlayerView
-            android:id="@+id/jcplayer"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/activity_track_appbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:next_icon_color="@color/white"
-            app:pause_icon_color="@color/white"
-            app:play_icon_color="@color/white"
-            app:previous_icon_color="@color/white"
-            app:progress_color="@color/white"
-            app:random_icon_color="@color/white"
-            app:repeat_icon_color="@color/white"
-            app:seek_bar_color="@color/white"
-            app:text_audio_current_duration_color="@color/white"
-            app:text_audio_duration_color="@color/white"
-            app:text_audio_title_color="@color/white"
-            tools:ignore="MissingClass" />
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/musicPlayerToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/menu_track"
+                app:navigationIcon="@drawable/ic_arrow_left_vector" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <FrameLayout
+                android:visibility="invisible"
+                android:id="@+id/favoriteFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/unFavoriteImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_gravity="right|center"
+                    android:src="@drawable/ic_un_add_favorite"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/favoriteImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_gravity="right|center"
+                    android:src="@drawable/ic_add_favorite"
+                    android:visibility="invisible" />
+
+
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:src="@drawable/ic_headset" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <com.example.jean.jcplayer.view.JcPlayerView
+                    android:id="@+id/jcplayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:next_icon_color="@color/white"
+                    app:pause_icon_color="@color/white"
+                    app:play_icon_color="@color/white"
+                    app:previous_icon_color="@color/white"
+                    app:progress_color="@color/white"
+                    app:random_icon_color="@color/white"
+                    app:repeat_icon_color="@color/white"
+                    app:seek_bar_color="@color/white"
+                    app:text_audio_current_duration_color="@color/white"
+                    app:text_audio_duration_color="@color/white"
+                    app:text_audio_title_color="@color/white"
+                    tools:ignore="MissingClass" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <!--<RelativeLayout
         android:id="@+id/next_track_holder"
@@ -103,4 +146,4 @@
             android:textSize="@dimen/bigger_text_size" />
 
     </RelativeLayout>-->
-</LinearLayout>
+</FrameLayout>

@@ -58,8 +58,6 @@ class artist extends RecyclerView.ViewHolder {
         super(itemView);
 
         artistName = itemView.findViewById(R.id.artistName);
-        /*totalArtistAlbum = itemView.findViewById(R.id.totalArtistAlbum);
-        totalArtistTrack = itemView.findViewById(R.id.totalArtistTrack);*/
 
     }
 }

@@ -1,9 +1,14 @@
 package com.blinkedge.musciplayer.RecyclerViewAdapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +45,21 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
 
         holder.albumName.setText(albumTracksModal.get(position).getAlbum());
 
+        String albumImageUrl = albumTracksModal.get(position).getPath();
+
+        Log.d("imgaeUri_", albumImageUrl);
+
+        MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+        metaRetriever.setDataSource(albumImageUrl);
+        try {
+            byte[] art = new byte[0];
+            Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length);
+            Log.d("image", String.valueOf(songImage));
+            holder.musicItemImage.setImageBitmap(songImage);
+        } catch (Exception ignored) {
+        }
+
+
     }
 
     @Override
@@ -51,10 +71,12 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
 class Album extends RecyclerView.ViewHolder {
 
     TextView albumName;
+    ImageView musicItemImage;
 
     public Album(@NonNull View itemView) {
         super(itemView);
 
+        musicItemImage = itemView.findViewById(R.id.musicItemImage);
         albumName = itemView.findViewById(R.id.albumName);
 
     }

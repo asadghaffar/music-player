@@ -16,12 +16,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="9"
             android:orientation="horizontal"
             android:weightSum="10">
 
             <TextView
-                android:id="@+id/appName"
+                android:visibility="gone"
+                android:id="@+id/searchAppName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
@@ -31,8 +32,8 @@
                 android:textSize="21sp"/>
 
             <LinearLayout
-                android:visibility="invisible"
-                android:id="@+id/searchLinear"
+                android:visibility="visible"
+                android:id="@+id/searchLinearLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
@@ -41,16 +42,17 @@
                 tools:ignore="NestedWeights">
 
                 <ImageView
-                    android:id="@+id/backImageView"
+                    android:id="@+id/searchBackImageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:padding="10dp"
+                    android:layout_weight="1.5"
+                    android:padding="13dp"
                     android:src="@drawable/ic_back" />
 
                 <EditText
+                    android:layout_marginLeft="10dp"
                     android:singleLine="true"
-                    android:id="@+id/searchSong"
+                    android:id="@+id/searchSongEditTextView"
                     android:textColor="@color/white"
                     android:textColorHint="@color/light_white"
                     android:layout_width="0dp"
@@ -64,29 +66,13 @@
         </LinearLayout>
 
         <ImageView
-            android:visibility="invisible"
+            android:layout_marginRight="10dp"
+            android:id="@+id/searchIconView"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:gravity="right"
-            android:padding="15dp"
-            android:src="@drawable/ic_search" />
-
-        <ImageView
-            android:id="@+id/searchIcon"
-            android:layout_width="0dp"
+            android:padding="5dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="6dp"
             android:src="@drawable/ic_search" />
-
-        <ImageView
-            android:id="@+id/menu"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="6dp"
-            android:src="@drawable/ic_more" />
 
     </LinearLayout>
 

@@ -1,11 +1,14 @@
 package com.blinkedge.musciplayer.RecyclerViewAdapter;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks> {
 
     private Context context;
-    private ArrayList<MusicFilesModal> musicFilesModals;
+    public static ArrayList<MusicFilesModal> musicFilesModals;
     private View view;
 
     public AllTracksRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> musicFilesModals1) {
@@ -65,7 +68,8 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, MusicPlayerActivity.class);
-            intent.putExtra("positiion", position);
+            intent.putExtra("position", position);
+            intent.putExtra("type","tab");
             context.startActivity(intent);
 
         });

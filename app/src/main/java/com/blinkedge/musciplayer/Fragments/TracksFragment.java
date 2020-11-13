@@ -10,7 +10,11 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.blinkedge.musciplayer.Activities.MainActivity;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.blinkedge.musciplayer.RecyclerViewAdapter.AllTracksRecyclerViewAdapter;
@@ -25,6 +29,8 @@ public class TracksFragment extends Fragment {
 
     private RecyclerView trackFragmentRecyclerView;
     private AllTracksRecyclerViewAdapter allTracksRecyclerViewAdapter;
+    private ArrayList<MusicFilesModal> trackList;
+    private ArrayList<MusicFilesModal> emptyTrackList;
     private View view;
 
     @Override
@@ -41,10 +47,15 @@ public class TracksFragment extends Fragment {
 
     private void recyclerView() {
         if (!(temporaryAudioFilesModal.size() < 1)) {
-            allTracksRecyclerViewAdapter = new AllTracksRecyclerViewAdapter(getContext(), (ArrayList<MusicFilesModal>) temporaryAudioFilesModal);
-            trackFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            trackFragmentRecyclerView.setAdapter(allTracksRecyclerViewAdapter);
+            trackList = (ArrayList<MusicFilesModal>) MainActivity.temporaryAudioFilesModal;
+            setAdapter(trackList);
         }
+    }
+
+    private void setAdapter(ArrayList<MusicFilesModal> list){
+        allTracksRecyclerViewAdapter = new AllTracksRecyclerViewAdapter(getContext(),list);
+        trackFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        trackFragmentRecyclerView.setAdapter(allTracksRecyclerViewAdapter);
     }
 
     private void id() {
