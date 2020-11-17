@@ -2,32 +2,22 @@ package com.blinkedge.musciplayer.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,7 +26,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.blinkedge.musciplayer.TabViewAdapter.TabViewAdapter;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -44,17 +33,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
+
+    private String MY_SORT_PREF = "Sort Order";
 
     // Custom Action Bar
     private ImageView menuImage;
     private PopupMenu menu;
-    private TextView appName;
-    private LinearLayout searchLinear;
-    private ImageView backImageView;
     private ImageView searchIcon;
-    private EditText searchSong;
-    private ImageView filter;
+    List<MusicFilesModal> tempAudioList;
+    List<MusicFilesModal> tempArtistList;
+    List<MusicFilesModal> tempAlbumList;
 
     // Tab View
     private TabLayout tabLayout;
@@ -76,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public byte[] getAlbumImage(String uri) {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(uri, new HashMap<>());
@@ -87,12 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void id() {
         menuImage = findViewById(R.id.menu);
-        appName = findViewById(R.id.appName);
-        searchLinear = findViewById(R.id.searchLinear);
-        backImageView = findViewById(R.id.backImageView);
-        searchSong = findViewById(R.id.searchSong);
         searchIcon = findViewById(R.id.searchIcon);
-
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPger);
     }
@@ -114,32 +97,8 @@ public class MainActivity extends AppCompatActivity {
         searchIcon.setOnClickListener(v -> {
             Intent intent = new Intent(this, SearchActivity.class);
             startActivity(intent);
-
-
         });
 
-    }
-
-    private void menuOnclick() {
-        //registering menu with OnMenuItemClickListener
-        menu.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
-            } else if (id == R.id.sortTitle) {
-                Toast toast = Toast.makeText(MainActivity.this, R.string.toastMessage, Toast.LENGTH_LONG);
-                toast.getView().setBackgroundColor(Color.parseColor("#FFFFFF"));
-                toast.show();
-            }
-            else if (id == R.id.sortAscending)
-                Toast.makeText(this, "Sorted By Aesending Order", Toast.LENGTH_SHORT).show();
-            else if (id == R.id.sortDescending)
-                Toast.makeText(this, "Sorted By Desending Order", Toast.LENGTH_SHORT).show();
-
-            return true;
-        });
     }
 
     private void tabLayout() {
@@ -189,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
     public List<MusicFilesModal> getAllAudioFromDevice(final Context context) {
 
-        final List<MusicFilesModal> tempAudioList = new ArrayList<>();
+        tempAudioList = new ArrayList<>();
+        tempArtistList = new ArrayList<>();
+        tempAlbumList = new ArrayList<>();
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.AudioColumns.ALBUM,
@@ -210,21 +171,44 @@ public class MainActivity extends AppCompatActivity {
                 String title = path.substring(path.lastIndexOf("/") + 1);
 
                 MusicFilesModal audioModel = new MusicFilesModal(path, title, artist, album, duration);
-
-                //Log.e("Name :" + title, " Album :" + album);
-                //Log.e("Path :" + path, " Artist :" + artist);
+                MusicFilesModal artistModel = new MusicFilesModal(path, title, artist, album, duration);
+                MusicFilesModal albumModel = new MusicFilesModal(path, title, artist, album, duration);
 
                 Log.d("artistName_", artist);
                 Log.d("path_", path);
                 Log.d("albumName_", album);
 
                 tempAudioList.add(audioModel);
+                tempAlbumList.add(artistModel);
+                tempAlbumList.add(albumModel);
+
             }
             c.close();
         }
         Log.d("tempAudioListSize_", tempAudioList.size() + "_");
+        Log.d("tempArtistListSize_", tempArtistList.size() + "_");
+        Log.d("tempAlbumListSize_", tempAlbumList.size() + "_");
 
         return tempAudioList;
+    }
+
+    private void menuOnclick() {
+        //registering menu with OnMenuItemClickListener
+        menu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.action_settings) {
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.sortTitle) {
+                Toast.makeText(this, "Soter By Title", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.sortAscending)
+                Toast.makeText(this, "Sorted By Aesending Order", Toast.LENGTH_SHORT).show();
+            else if (id == R.id.sortDescending)
+                Toast.makeText(this, "Sorted By Desending Order", Toast.LENGTH_SHORT).show();
+
+            return true;
+        });
     }
 
 }

@@ -1,6 +1,6 @@
 package com.blinkedge.musciplayer.MusicFilesModal;
 
-public class MusicFilesModal implements Comparable<MusicFilesModal>{
+public class MusicFilesModal{
 
     private String path;
     private String title;
@@ -14,12 +14,6 @@ public class MusicFilesModal implements Comparable<MusicFilesModal>{
         this.artist = artist;
         this.album = album;
         this.duration = duration;
-    }
-
-    // For compare
-    @Override
-    public int compareTo(MusicFilesModal other) {
-        return this.title.compareTo(other.title);
     }
 
     // Getter Setter

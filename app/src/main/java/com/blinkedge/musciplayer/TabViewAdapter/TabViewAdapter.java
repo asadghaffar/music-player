@@ -28,8 +28,6 @@ public class TabViewAdapter extends FragmentStatePagerAdapter {
             return new AlbumsFragment();
         else if (position == 3)
             return new PlaylistsFragment();
-        /*else if (position == 4)
-            return new FavouriteFragment();*/
 
         return null;
     }
@@ -48,9 +46,7 @@ public class TabViewAdapter extends FragmentStatePagerAdapter {
         else if (position == 2)
             return "Albums";
         else if (position == 3)
-            return "Playliste";
-        /*else if (position == 4)
-            return "Favorite";*/
+            return "Playlist";
         else
         return "";
     }

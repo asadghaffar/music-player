@@ -49,9 +49,9 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
 
         Log.d("imgaeUri_", albumImageUrl);
 
-        MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-        metaRetriever.setDataSource(albumImageUrl);
         try {
+            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+            metaRetriever.setDataSource(albumImageUrl);
             byte[] art = new byte[0];
             Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length);
             Log.d("image", String.valueOf(songImage));

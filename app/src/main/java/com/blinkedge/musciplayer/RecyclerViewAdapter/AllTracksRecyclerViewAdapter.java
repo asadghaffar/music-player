@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,15 +29,15 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks> {
+public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks>{
 
-    private Context context;
+    private final Context context;
     public static ArrayList<MusicFilesModal> musicFilesModals;
     private View view;
 
     public AllTracksRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> musicFilesModals1) {
         this.context = context1;
-        this.musicFilesModals = musicFilesModals1;
+        musicFilesModals = musicFilesModals1;
     }
 
     @NonNull
@@ -56,9 +58,10 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
 
         Log.d("imgaeUri_", imageUrl);
 
-        MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-        metaRetriever.setDataSource(imageUrl);
+
         try {
+            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+            metaRetriever.setDataSource(imageUrl);
             byte[] art = new byte[0];
             Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length);
             Log.d("image", String.valueOf(songImage));
@@ -69,40 +72,39 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, MusicPlayerActivity.class);
             intent.putExtra("position", position);
-            intent.putExtra("type","tab");
+            intent.putExtra("type", "tab");
             context.startActivity(intent);
 
         });
 
-        String duration = musicFilesModals.get(position).getDuration();
-        @SuppressLint("DefaultLocale")
-        String time = String.format("%02d : %02d ",
-                TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration)),
-                TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(duration)) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration)))
-        );
+        try {
+            String duration = musicFilesModals.get(position).getDuration();
+            @SuppressLint("DefaultLocale")
+            String time = String.format("%02d : %02d ",
+                    TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration)),
+                    TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(duration)) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration))));
+            holder.trackItemDuration.setText(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        holder.trackItemDuration.setText(time);
+    }
 
-        /*byte[] image = musicFilesModals.get(position).();
-        if (image != null) {
-            Glide.with(context).asBitmap()
-                    .load(image)
-                    .centerCrop()
-                    .into(holder.trackItemImage);
-        } else {
-            Glide.with(context)
-                    .load(R.drawable.ic_headset)
-                    .into(holder.trackItemImage);
-        }*/
+    @Override
+    public long getItemId(int position) {
+        return Long.parseLong(musicFilesModals.get(position).getTitle());
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
     public int getItemCount() {
         return musicFilesModals.size();
     }
-
 }
 
 class AllTracks extends RecyclerView.ViewHolder {
