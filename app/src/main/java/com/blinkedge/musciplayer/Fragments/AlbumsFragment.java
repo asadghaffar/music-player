@@ -3,6 +3,7 @@ package com.blinkedge.musciplayer.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,6 @@ public class AlbumsFragment extends Fragment {
 
     private View view;
     private RecyclerView albumRecyclerView;
-    private ArrayList<MusicFilesModal> albumTracksModal1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +44,8 @@ public class AlbumsFragment extends Fragment {
     }
 
     private void recyclerView() {
-        AlbumRecyclerViewAdapter albumRecyclerViewAdapter = new AlbumRecyclerViewAdapter(getContext(), (ArrayList<MusicFilesModal>) temporaryAudioFilesModal);
+        AlbumRecyclerViewAdapter albumRecyclerViewAdapter = new AlbumRecyclerViewAdapter(getContext(),
+                                                    (ArrayList<MusicFilesModal>) temporaryAudioFilesModal);
         albumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         albumRecyclerView.setAdapter(albumRecyclerViewAdapter);
     }

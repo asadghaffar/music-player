@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.blinkedge.musciplayer.Fragments.TracksFragment;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
+import com.blinkedge.musciplayer.RecyclerViewAdapter.AlbumDetailRecyclerViewAdapter;
 import com.blinkedge.musciplayer.RecyclerViewAdapter.AllTracksRecyclerViewAdapter;
 import com.example.jean.jcplayer.model.JcAudio;
 import com.example.jean.jcplayer.view.JcPlayerView;
@@ -42,8 +43,6 @@ public class MusicPlayerActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-
-
     private ImageView unFavoriteImageView;
     private ImageView favoriteImageView;
 
@@ -51,11 +50,11 @@ public class MusicPlayerActivity extends AppCompatActivity {
     private JcPlayerView jcPlayerView;
     List<JcAudio> audioList;
 
-    private int uriSong;
     static List<MusicFilesModal> musicPlayerListSongs;
 
     private int positionFavoriteSong;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,15 +81,11 @@ public class MusicPlayerActivity extends AppCompatActivity {
             favoriteImageView.setVisibility(View.VISIBLE);
 
             save();
-
-
         });
 
         favoriteImageView.setOnClickListener(v -> {
             favoriteImageView.setVisibility(View.INVISIBLE);
             unFavoriteImageView.setVisibility(View.VISIBLE);
-
-
         });
 
     }
@@ -103,25 +98,26 @@ public class MusicPlayerActivity extends AppCompatActivity {
     }
 
     private void musicPLayerJcAudioPlayer() {
+        int uriSong = getIntent().getIntExtra("position", 999999999);
+        String getData = getIntent().getStringExtra("songName");
+        if (getData != null && getData.equals("albumDetails")) {
+            musicPlayerListSongs = AlbumDetailRecyclerViewAdapter.albumTracksModal;
+        } else {
+            musicPlayerListSongs = AllTracksRecyclerViewAdapter.musicFilesModals;
 
-        uriSong = getIntent().getIntExtra("position", 999999999);
+            jcPlayerView = findViewById(R.id.jcplayer);
 
-        musicPlayerListSongs = AllTracksRecyclerViewAdapter.musicFilesModals;
+            audioList = new ArrayList<>();
+            for (int i = 0; i < musicPlayerListSongs.size(); i++) {
+                audioList.add(JcAudio.createFromFilePath(musicPlayerListSongs.get(i).getTitle(),
+                        String.valueOf(Uri.parse(musicPlayerListSongs.get(i).getPath()))));
 
-        jcPlayerView = findViewById(R.id.jcplayer);
+                positionFavoriteSong = i;
 
-        audioList = new ArrayList<>();
-        for (int i = 0; i < musicPlayerListSongs.size(); i++) {
-            audioList.add(JcAudio.createFromFilePath(musicPlayerListSongs.get(i).getTitle(),
-                    String.valueOf(Uri.parse(musicPlayerListSongs.get(i).getPath()))));
-
-            positionFavoriteSong = i;
-
+            }
+            jcPlayerView.initPlaylist(audioList, null);
+            jcPlayerView.playAudio(audioList.get(uriSong));
         }
-        jcPlayerView.initPlaylist(audioList, null);
-        jcPlayerView.playAudio(audioList.get(uriSong));
-
-
     }
 
     @Override

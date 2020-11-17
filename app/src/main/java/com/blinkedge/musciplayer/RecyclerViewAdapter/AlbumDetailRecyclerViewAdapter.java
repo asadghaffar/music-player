@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blinkedge.musciplayer.Activities.AlbumDetailsActivity;
+import com.blinkedge.musciplayer.Activities.MusicPlayerActivity;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.bumptech.glide.Glide;
@@ -24,43 +25,44 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
+public class AlbumDetailRecyclerViewAdapter extends RecyclerView.Adapter<AlbumDetail> {
 
     private Context context;
     private View view;
     public static ArrayList<MusicFilesModal> albumTracksModal;
 
-    public AlbumRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> albumTracksModal1) {
+    public AlbumDetailRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> albumTracksModal1) {
         this.context = context1;
         albumTracksModal = albumTracksModal1;
     }
 
     @NonNull
     @Override
-    public Album onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlbumDetail onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        view = LayoutInflater.from(context).inflate(R.layout.custom_album_item_view, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.custom_track_item_view, parent, false);
 
-        return new Album(view);
+        return new AlbumDetail(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Album holder, int position) {
-        holder.albumName.setText(albumTracksModal.get(position).getAlbum());
+    public void onBindViewHolder(@NonNull AlbumDetail holder, int position) {
+        holder.albumDetailMusicName.setText(albumTracksModal.get(position).getAlbum());
+        holder.albumDetailMusicName.setText(albumTracksModal.get(position).getAlbum());
         byte[] trackImage = getAlbumImage(albumTracksModal.get(position).getPath());
-        if (trackImage != null){
-            Glide.with(context).asBitmap().load(trackImage).into(holder.albumImage);
-        }else {
-            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.albumImage);
+        if (trackImage != null) {
+            Glide.with(context).asBitmap().load(trackImage).into(holder.albumDetailMusicImage);
+        } else {
+            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.albumDetailMusicImage);
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, AlbumDetailsActivity.class);
-            intent.putExtra("albumName", albumTracksModal.get(position).getAlbum());
-            intent.putExtra("albumPosition", albumTracksModal.get(position).getPath());
+            Intent intent = new Intent(context, MusicPlayerActivity.class);
+            intent.putExtra("songName", "albumDetails");
+            intent.putExtra("position", position);
             context.startActivity(intent);
-        });
 
+        });
     }
 
     @Override
@@ -78,16 +80,18 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
 
 }
 
-class Album extends RecyclerView.ViewHolder {
+class AlbumDetail extends RecyclerView.ViewHolder {
 
-    TextView albumName;
-    ImageView albumImage;
+    TextView albumDetailMusicName;
+    TextView albumDetailMusicDuration;
+    ImageView albumDetailMusicImage;
 
-    public Album(@NonNull View itemView) {
+    public AlbumDetail(@NonNull View itemView) {
         super(itemView);
 
-        albumImage = itemView.findViewById(R.id.albumImage);
-        albumName = itemView.findViewById(R.id.albumName);
+        albumDetailMusicName = itemView.findViewById(R.id.musicItemName);
+        albumDetailMusicImage = itemView.findViewById(R.id.musicItemImage);
+        albumDetailMusicDuration = itemView.findViewById(R.id.musicItemDuration);
 
     }
 

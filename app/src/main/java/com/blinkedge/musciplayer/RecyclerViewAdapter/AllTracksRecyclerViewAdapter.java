@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks>{
+public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks> {
 
     private final Context context;
     public static ArrayList<MusicFilesModal> musicFilesModals;
@@ -54,19 +54,11 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
 
         holder.trackItemName.setText(musicFilesModals.get(position).getTitle());
         holder.trackItemDuration.setText(musicFilesModals.get(position).getDuration());
-        String imageUrl = musicFilesModals.get(position).getPath();
-
-        Log.d("imgaeUri_", imageUrl);
-
-
-        try {
-            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-            metaRetriever.setDataSource(imageUrl);
-            byte[] art = new byte[0];
-            Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length);
-            Log.d("image", String.valueOf(songImage));
-            holder.trackItemImage.setImageBitmap(songImage);
-        } catch (Exception ignored) {
+        byte[] albumImage = getTrackImage(Uri.parse(musicFilesModals.get(position).getPath()));
+        if (albumImage != null) {
+            Glide.with(context).asBitmap().load(albumImage).into(holder.trackItemImage);
+        } else {
+            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.trackItemImage);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -77,6 +69,7 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
 
         });
 
+        // Duration
         try {
             String duration = musicFilesModals.get(position).getDuration();
             @SuppressLint("DefaultLocale")
@@ -89,6 +82,20 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
             e.printStackTrace();
         }
 
+    }
+
+    private byte[] getTrackImage(Uri uri) {
+        byte [] art = new byte[0];
+        try {
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(String.valueOf(uri));
+            art = mediaMetadataRetriever.getEmbeddedPicture();
+            mediaMetadataRetriever.release();
+        } catch (Exception e) {
+            Log.d("error_", String.valueOf(e));
+            e.printStackTrace();
+        }
+        return art;
     }
 
     @Override
@@ -112,7 +119,6 @@ class AllTracks extends RecyclerView.ViewHolder {
     ImageView trackItemImage;
     TextView trackItemName;
     TextView trackItemDuration;
-    ;
 
     public AllTracks(@NonNull View itemView) {
         super(itemView);

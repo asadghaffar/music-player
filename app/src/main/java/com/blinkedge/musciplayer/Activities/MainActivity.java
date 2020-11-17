@@ -4,14 +4,17 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -30,12 +33,13 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
-    private String MY_SORT_PREF = "Sort Order";
+    private String MY_SORT_PREF = "SortOrder";
 
     // Custom Action Bar
     private ImageView menuImage;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ResourceType")
     private void onClick() {
 
@@ -88,9 +93,7 @@ public class MainActivity extends AppCompatActivity{
             menu = new PopupMenu(MainActivity.this, menuImage);
             //Inflating the Menu using xml file
             menu.getMenuInflater().inflate(R.menu.menu_main, menu.getMenu());
-
-            menuOnclick();
-
+            //menuOnclick();
             menu.show();
         });
 
@@ -148,11 +151,26 @@ public class MainActivity extends AppCompatActivity{
 
     public List<MusicFilesModal> getAllAudioFromDevice(final Context context) {
 
+        SharedPreferences sharedPreferences = getSharedPreferences(MY_SORT_PREF, MODE_PRIVATE);
+        String sortOrder = sharedPreferences.getString("sortingOrder", "sortAscending");
+
         tempAudioList = new ArrayList<>();
         tempArtistList = new ArrayList<>();
         tempAlbumList = new ArrayList<>();
 
+        //String order = null;
+
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        /*switch (sortOrder){
+            case "sortAscending":
+                order = MediaStore.MediaColumns.TITLE + "ASC";
+                break;
+            case "sortDescending":
+                order = MediaStore.MediaColumns.TITLE + "DESC";
+                break;
+        }*/
+
         String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.AudioColumns.ALBUM,
                 MediaStore.Audio.ArtistColumns.ARTIST,
                 MediaStore.Audio.Media.DURATION};
@@ -192,6 +210,29 @@ public class MainActivity extends AppCompatActivity{
         return tempAudioList;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        SharedPreferences.Editor sortingOrderSharedPreferences = getSharedPreferences(MY_SORT_PREF, MODE_PRIVATE).edit();
+
+        switch (item.getItemId()) {
+            case R.id.sortAscending:
+                sortingOrderSharedPreferences.putString("sortingOrder", "sortAscending");
+                sortingOrderSharedPreferences.apply();
+                this.recreate();
+                break;
+
+            case R.id.sortDescending:
+                sortingOrderSharedPreferences.putString("sortingOrder", "sortDescending");
+                sortingOrderSharedPreferences.apply();
+                this.recreate();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /* @RequiresApi(api = Build.VERSION_CODES.N)
     private void menuOnclick() {
         //registering menu with OnMenuItemClickListener
         menu.setOnMenuItemClickListener(item -> {
@@ -202,6 +243,13 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             } else if (id == R.id.sortTitle) {
                 Toast.makeText(this, "Soter By Title", Toast.LENGTH_SHORT).show();
+
+                Comparator<MusicFilesModal> compareTile = (MusicFilesModal o1, MusicFilesModal o2) -> o1.getTitle().compareTo( o2.getTitle() );
+
+                Collections.sort(temporaryAudioFilesModal, compareTile);
+
+                Collections.sort(temporaryAudioFilesModal, compareTile.reversed());
+
             } else if (id == R.id.sortAscending)
                 Toast.makeText(this, "Sorted By Aesending Order", Toast.LENGTH_SHORT).show();
             else if (id == R.id.sortDescending)
@@ -209,6 +257,6 @@ public class MainActivity extends AppCompatActivity{
 
             return true;
         });
-    }
+    }*/
 
 }
