@@ -28,10 +28,7 @@ public class AlbumDetailsActivity extends AppCompatActivity {
     private RecyclerView albumDetailRecyclerView;
     private ImageView albumDetailAlbumImage;
     private ImageView customActionBackImageDetailActivity;
-    static ArrayList<MusicFilesModal> albumSongs = new ArrayList<>();
-    private String albumName = "";
-    private int j = 0;
-    byte[] albumImage = new byte[0];
+    private final ArrayList<MusicFilesModal> albumSongs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +43,7 @@ public class AlbumDetailsActivity extends AppCompatActivity {
 
     private void onClick() {
         customActionBackImageDetailActivity.setOnClickListener(v -> {
-            Intent intent = new Intent(AlbumDetailsActivity.this, MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 
@@ -65,11 +61,11 @@ public class AlbumDetailsActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        albumName = getIntent().getStringExtra("albumName");
+        String albumName = getIntent().getStringExtra("albumName");
 
         for (int i = 0; i < temporaryAudioFilesModal.size(); i++) {
             if (albumName.equals(temporaryAudioFilesModal.get(i).getAlbum())) {
-                Log.d("wsefw__","intent data="+albumName+"listdata="+temporaryAudioFilesModal.get(i).getAlbum());
+                Log.d("wsefw__","intent data="+ albumName +"listdata="+temporaryAudioFilesModal.get(i).getAlbum());
                 albumSongs.clear();
                 albumSongs.add( temporaryAudioFilesModal.get(i));
             }

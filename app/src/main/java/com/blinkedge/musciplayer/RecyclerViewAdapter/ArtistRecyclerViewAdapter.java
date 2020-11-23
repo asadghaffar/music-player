@@ -47,7 +47,7 @@ public class ArtistRecyclerViewAdapter extends RecyclerView.Adapter<artist> {
         if (trackImage != null){
             Glide.with(context).asBitmap().load(trackImage).into(holder.artistImage);
         }else {
-            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.artistImage);
+            Glide.with(context).asBitmap().load(R.drawable.ic_artist).into(holder.artistImage);
         }
 
         holder.itemView.setOnClickListener(v -> {

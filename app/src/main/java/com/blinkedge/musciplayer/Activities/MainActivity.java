@@ -61,18 +61,7 @@ public class MainActivity extends AppCompatActivity {
         onClick();
         tabLayout();
         checkPermission();
-        activityToFragment();
 
-    }
-
-    private void activityToFragment() {
-        try {
-            String albumKey = getIntent().getStringExtra("albumDetail");
-            if (albumKey.equals("albumDetail")){}
-
-        } catch (Exception e){
-
-        }
     }
 
     private void id() {

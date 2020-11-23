@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayer">
         <activity android:name=".Activities.ArtistDetailActivity"></activity>
-        <activity android:name=".Activities.ArtistActivity" />
         <activity android:name=".Activities.AlbumDetailsActivity" />
         <activity android:name=".Activities.SearchActivity" />
         <activity android:name=".Activities.SettingActivity" />

@@ -8,7 +8,7 @@
     android:background="@color/background_color"
     tools:context=".Activities.AlbumDetailsActivity">
 
-    <include layout="@layout/custom_action_bar_album_detail"/>
+    <include layout="@layout/custom_action_bar_artist"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/artistDetailArtistImage"
@@ -20,7 +20,7 @@
         android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/albumDetailRecyclerView"
+        android:id="@+id/artistDetailRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

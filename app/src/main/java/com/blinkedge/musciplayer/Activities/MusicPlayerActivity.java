@@ -34,6 +34,7 @@ import java.util.List;
 
 import static com.blinkedge.musciplayer.Activities.MainActivity.temporaryAudioFilesModal;
 import static com.blinkedge.musciplayer.RecyclerViewAdapter.AlbumDetailRecyclerViewAdapter.detailAlbumTracksModal;
+import static com.blinkedge.musciplayer.RecyclerViewAdapter.AllTracksRecyclerViewAdapter.musicFilesModals;
 
 public class MusicPlayerActivity extends AppCompatActivity {
 
@@ -46,6 +47,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
     private ImageView unFavoriteImageView;
     private ImageView favoriteImageView;
+    private ImageView trackImageView;
 
     // JC Player
     private JcPlayerView jcPlayerView;
@@ -104,7 +106,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
         if (getData != null && getData.equals("albumDetails")) {
             musicPlayerListSongs = detailAlbumTracksModal;
         } else {
-            musicPlayerListSongs = AllTracksRecyclerViewAdapter.musicFilesModals;
+            musicPlayerListSongs = musicFilesModals;
         }
         jcPlayerView = findViewById(R.id.jcplayer);
 
@@ -131,11 +133,12 @@ public class MusicPlayerActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         jcPlayerView.createNotification();
-        jcPlayerView.createNotification(R.drawable.ic_headset);
+        jcPlayerView.createNotification(R.mipmap.ic_app_launcher);
     }
 
     private void id() {
         materialToolbar = findViewById(R.id.musicPlayerToolbar);
+        trackImageView = findViewById(R.id.trackImageView);
         favoriteImageView = findViewById(R.id.favoriteImageView);
         unFavoriteImageView = findViewById(R.id.unFavoriteImageView);
 

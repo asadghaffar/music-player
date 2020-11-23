@@ -52,13 +52,13 @@ public class AllTracksRecyclerViewAdapter extends RecyclerView.Adapter<AllTracks
         if (albumImage != null) {
             Glide.with(context).asBitmap().load(albumImage).into(holder.trackItemImage);
         } else {
-            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.trackItemImage);
+            Glide.with(context).asBitmap().load(R.drawable.ic_headset).into(holder.trackItemImage);
         }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, MusicPlayerActivity.class);
             intent.putExtra("position", position);
-            intent.putExtra("track", "allTracksRecycler");
+            intent.putExtra("trackWaliActivitySyArha", "allTracksRecycler");
             context.startActivity(intent);
 
         });
