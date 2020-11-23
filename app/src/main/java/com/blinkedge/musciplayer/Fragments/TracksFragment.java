@@ -18,6 +18,7 @@ import com.blinkedge.musciplayer.Activities.MainActivity;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.blinkedge.musciplayer.RecyclerViewAdapter.AllTracksRecyclerViewAdapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,7 +62,5 @@ public class TracksFragment extends Fragment {
     private void id() {
         trackFragmentRecyclerView = view.findViewById(R.id.trackFragmentRecyclerView);
     }
-
-
 
 }

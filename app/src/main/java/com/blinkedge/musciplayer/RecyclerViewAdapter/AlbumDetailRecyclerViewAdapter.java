@@ -1,11 +1,9 @@
 package com.blinkedge.musciplayer.RecyclerViewAdapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +13,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blinkedge.musciplayer.Activities.AlbumDetailsActivity;
 import com.blinkedge.musciplayer.Activities.MusicPlayerActivity;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.bumptech.glide.Glide;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AlbumDetailRecyclerViewAdapter extends RecyclerView.Adapter<AlbumDetail> {
 
     private Context context;
     private View view;
-    public static ArrayList<MusicFilesModal> albumTracksModal;
+    public static ArrayList<MusicFilesModal> detailAlbumTracksModal;
 
-    public AlbumDetailRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> albumTracksModal1) {
+    public AlbumDetailRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> detailAlbumTracksModal1) {
         this.context = context1;
-        albumTracksModal = albumTracksModal1;
+        detailAlbumTracksModal = detailAlbumTracksModal1;
     }
 
     @NonNull
@@ -47,9 +43,9 @@ public class AlbumDetailRecyclerViewAdapter extends RecyclerView.Adapter<AlbumDe
 
     @Override
     public void onBindViewHolder(@NonNull AlbumDetail holder, int position) {
-        holder.albumDetailMusicName.setText(albumTracksModal.get(position).getAlbum());
-        holder.albumDetailMusicName.setText(albumTracksModal.get(position).getAlbum());
-        byte[] trackImage = getAlbumImage(albumTracksModal.get(position).getPath());
+        holder.albumDetailMusicName.setText(detailAlbumTracksModal.get(position).getTitle());
+        holder.albumDetailMusicDuration.setText(detailAlbumTracksModal.get(position).getDuration());
+        byte[] trackImage = getAlbumImage(detailAlbumTracksModal.get(position).getPath());
         if (trackImage != null) {
             Glide.with(context).asBitmap().load(trackImage).into(holder.albumDetailMusicImage);
         } else {
@@ -58,16 +54,30 @@ public class AlbumDetailRecyclerViewAdapter extends RecyclerView.Adapter<AlbumDe
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, MusicPlayerActivity.class);
-            intent.putExtra("songName", "albumDetails");
+            intent.putExtra("detailAlbumSyArhaH", "albumDetails");
             intent.putExtra("position", position);
             context.startActivity(intent);
 
         });
+
+        // Duration
+        try {
+            String duration = detailAlbumTracksModal.get(position).getDuration();
+            @SuppressLint("DefaultLocale")
+            String time = String.format("%02d : %02d ",
+                    TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration)),
+                    TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(duration)) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(duration))));
+            holder.albumDetailMusicDuration.setText(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return albumTracksModal.size();
+        return detailAlbumTracksModal.size();
     }
 
     private byte[] getAlbumImage(String uri) {

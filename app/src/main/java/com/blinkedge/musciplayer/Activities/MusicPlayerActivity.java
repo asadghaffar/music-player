@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.blinkedge.musciplayer.Activities.MainActivity.temporaryAudioFilesModal;
+import static com.blinkedge.musciplayer.RecyclerViewAdapter.AlbumDetailRecyclerViewAdapter.detailAlbumTracksModal;
 
 public class MusicPlayerActivity extends AppCompatActivity {
 
@@ -99,26 +100,26 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
     private void musicPLayerJcAudioPlayer() {
         int uriSong = getIntent().getIntExtra("position", 999999999);
-        String getData = getIntent().getStringExtra("songName");
+        String getData = getIntent().getStringExtra("detailAlbumSyArhaH");
         if (getData != null && getData.equals("albumDetails")) {
-            musicPlayerListSongs = AlbumDetailRecyclerViewAdapter.albumTracksModal;
+            musicPlayerListSongs = detailAlbumTracksModal;
         } else {
             musicPlayerListSongs = AllTracksRecyclerViewAdapter.musicFilesModals;
-
-            jcPlayerView = findViewById(R.id.jcplayer);
-
-            audioList = new ArrayList<>();
-            for (int i = 0; i < musicPlayerListSongs.size(); i++) {
-                audioList.add(JcAudio.createFromFilePath(musicPlayerListSongs.get(i).getTitle(),
-                        String.valueOf(Uri.parse(musicPlayerListSongs.get(i).getPath()))));
-
-                positionFavoriteSong = i;
-
-            }
-            jcPlayerView.initPlaylist(audioList, null);
-            jcPlayerView.playAudio(audioList.get(uriSong));
         }
+        jcPlayerView = findViewById(R.id.jcplayer);
+
+        audioList = new ArrayList<>();
+        for (int i = 0; i < musicPlayerListSongs.size(); i++) {
+            audioList.add(JcAudio.createFromFilePath(musicPlayerListSongs.get(i).getTitle(),
+                    String.valueOf(Uri.parse(musicPlayerListSongs.get(i).getPath()))));
+
+            positionFavoriteSong = i;
+
+        }
+        jcPlayerView.initPlaylist(audioList, null);
+        jcPlayerView.playAudio(audioList.get(uriSong));
     }
+
 
     @Override
     protected void onDestroy() {

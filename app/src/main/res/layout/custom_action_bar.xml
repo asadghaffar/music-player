@@ -82,7 +82,7 @@
             android:src="@drawable/ic_search" />
 
         <ImageView
-            android:id="@+id/menu"
+            android:id="@+id/menuImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

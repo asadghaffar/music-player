@@ -27,7 +27,7 @@ public class ArtistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_artist, container, false);
+        view = inflater.inflate(R.layout.fragment_artist, container, false);
 
         id();
         recyclerView();
@@ -36,9 +36,10 @@ public class ArtistFragment extends Fragment {
     }
 
     private void recyclerView() {
-        ArtistRecyclerViewAdapter artistRecyclerViewAdapter = new ArtistRecyclerViewAdapter(getContext(), (ArrayList<MusicFilesModal>) temporaryAudioFilesModal);
-            artistRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            artistRecyclerView.setAdapter(artistRecyclerViewAdapter);
+        ArtistRecyclerViewAdapter artistRecyclerViewAdapter = new ArtistRecyclerViewAdapter(getContext(),
+                                (ArrayList<MusicFilesModal>) temporaryAudioFilesModal);
+        artistRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        artistRecyclerView.setAdapter(artistRecyclerViewAdapter);
 
     }
 

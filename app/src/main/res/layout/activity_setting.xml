@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,7 @@
     android:weightSum="10"
     tools:context=".Activities.SettingActivity">
 
-    <include layout="@layout/custom_setting_action_bar" />
+    <include layout="@layout/custom_action_bar_setting" />
 
     <LinearLayout
         android:id="@+id/rateAppLinear"
@@ -24,13 +23,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
+            android:padding="10dp"
             android:src="@drawable/ic_rate"
             tools:ignore="NestedWeights" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7.7"
+            android:layout_weight="7"
             android:gravity="center|left"
             android:paddingLeft="20dp"
             android:text="Rate App"
@@ -40,8 +40,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_next" />
+            android:layout_weight="1.7"
+            android:padding="10dp"
+            android:src="@drawable/ic_navigation_next" />
 
     </LinearLayout>
 
@@ -67,12 +68,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
-             />
+            android:padding="10dp"
+            android:src="@drawable/ic_share" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7.7"
+            android:layout_weight="7"
             android:gravity="center|left"
             android:paddingLeft="20dp"
             android:text="Share App"
@@ -82,8 +84,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_next" />
+            android:layout_weight="1.7"
+            android:padding="10dp"
+            android:src="@drawable/ic_navigation_next" />
 
     </LinearLayout>
 
@@ -108,12 +111,14 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.3" />
+            android:layout_weight="1.3"
+            android:padding="10dp"
+            android:src="@drawable/ic_privacy_policy" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7.7"
+            android:layout_weight="7"
             android:gravity="center|left"
             android:paddingLeft="20dp"
             android:text="Privacy Policy"
@@ -123,8 +128,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_next" />
+            android:layout_weight="1.7"
+            android:padding="10dp"
+            android:src="@drawable/ic_navigation_next" />
 
     </LinearLayout>
 
@@ -150,12 +156,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:src="@drawable/ic_more_apps" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7.7"
+            android:layout_weight="7"
             android:gravity="center|left"
             android:paddingLeft="20dp"
             android:text="More Apps"
@@ -165,8 +172,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_next" />
+            android:layout_weight="1.7"
+            android:padding="10dp"
+            android:src="@drawable/ic_navigation_next" />
 
     </LinearLayout>
 
@@ -191,12 +199,14 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.3" />
+            android:layout_weight="1.3"
+            android:padding="10dp"
+            android:src="@drawable/ic_exit" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7.7"
+            android:layout_weight="7"
             android:gravity="center|left"
             android:paddingLeft="20dp"
             android:text="Exit"
@@ -206,8 +216,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_next" />
+            android:layout_weight="1.7"
+            android:padding="10dp"
+            android:src="@drawable/ic_navigation_next" />
 
     </LinearLayout>
 

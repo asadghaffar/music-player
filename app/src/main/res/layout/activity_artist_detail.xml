@@ -11,12 +11,12 @@
     <include layout="@layout/custom_action_bar_album_detail"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/albumDetailAlbumImage"
+        android:id="@+id/artistDetailArtistImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/ic_album"
+        android:src="@drawable/ic_artist"
         android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

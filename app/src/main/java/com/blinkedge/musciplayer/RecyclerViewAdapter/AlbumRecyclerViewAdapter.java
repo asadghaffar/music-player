@@ -28,11 +28,11 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<Album> {
 
     private Context context;
     private View view;
-    public static ArrayList<MusicFilesModal> albumTracksModal;
+    private final ArrayList<MusicFilesModal> albumTracksModal;
 
     public AlbumRecyclerViewAdapter(Context context1, ArrayList<MusicFilesModal> albumTracksModal1) {
         this.context = context1;
-        albumTracksModal = albumTracksModal1;
+        this.albumTracksModal = albumTracksModal1;
     }
 
     @NonNull

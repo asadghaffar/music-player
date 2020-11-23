@@ -1,6 +1,7 @@
 package com.blinkedge.musciplayer.RecyclerViewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blinkedge.musciplayer.Activities.AlbumDetailsActivity;
+import com.blinkedge.musciplayer.Activities.ArtistDetailActivity;
 import com.blinkedge.musciplayer.MusicFilesModal.MusicFilesModal;
 import com.blinkedge.musciplayer.R;
 import com.bumptech.glide.Glide;
@@ -40,16 +43,24 @@ public class ArtistRecyclerViewAdapter extends RecyclerView.Adapter<artist> {
     @Override
     public void onBindViewHolder(@NonNull artist holder, int position) {
         holder.artistName.setText(artistNameModal.get(position).getArtist());
-        byte[] trackImage = getArtistImage(artistNameModal.get(position).getPath());
-        if (trackImage != null) {
+        byte[] trackImage = getAlbumImage(artistNameModal.get(position).getPath());
+        if (trackImage != null){
             Glide.with(context).asBitmap().load(trackImage).into(holder.artistImage);
-        } else {
-            Glide.with(context).asBitmap().load(R.drawable.ic_artist).into(holder.artistImage);
+        }else {
+            Glide.with(context).asBitmap().load(R.drawable.ic_album).into(holder.artistImage);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ArtistDetailActivity.class);
+            intent.putExtra("artistName", artistNameModal.get(position).getArtist());
+            intent.putExtra("artistPosition", artistNameModal.get(position).getPath());
+            context.startActivity(intent);
+        });
+
 
     }
 
-    private byte[] getArtistImage(String uri) {
+    private byte[] getAlbumImage(String uri) {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(uri);
         byte[] art = mediaMetadataRetriever.getEmbeddedPicture();

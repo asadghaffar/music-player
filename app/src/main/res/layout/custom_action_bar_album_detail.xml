@@ -9,7 +9,7 @@
     android:weightSum="10">
 
     <ImageView
-        android:id="@+id/customActionBackImage"
+        android:id="@+id/customActionBackImageDetailActivity"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
